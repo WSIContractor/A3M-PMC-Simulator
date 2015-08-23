@@ -16,3 +16,13 @@ notifications:
   on_build_success: false
   on_build_failure: true
   on_build_status_changed: false
+
+environment:
+  access_token:
+    secure: 3e32d1ee4d500bba6a0e5239a11545e6419ba963
+
+on_success:
+  - git config --global credential.helper store
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+  - git commit ...
+  - git push ...
